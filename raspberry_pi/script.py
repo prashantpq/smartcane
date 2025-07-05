@@ -38,12 +38,20 @@ try:
         ret, frame = cap.read()
         if not ret:
             continue
+
         objects = detect_objects(frame)
+
         for obj in objects:
             send_data(obj)
+
         time.sleep(1)
 
 except KeyboardInterrupt:
     cap.release()
     GPIO.cleanup()
     print("Exiting gracefully.")
+
+
+# run the line in pi4 terminal so that the script can run as soon as pi starts
+# crontab -e
+# @reboot python3 /home/pi/smart-cane/raspberry_pi/scripts.py &
